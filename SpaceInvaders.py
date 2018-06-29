@@ -7,6 +7,17 @@ import os
 window = turtle.Screen()
 window.bgcolor("black")
 window.title("Space Invaders")
+window.bgpic("space_invaders_background.gif")
+
+
+# Add images
+enemy_ship = "spin.gif"
+window.addshape(enemy_ship)
+space_ship = "space_ship.gif"
+window.addshape(space_ship)
+missile = "missile.gif"
+window.addshape(missile)
+
 
 # Draw border
 border_pen = turtle.Turtle()
@@ -21,10 +32,23 @@ for side in range(4):
     border_pen.lt(90)
 border_pen.hideturtle()
 
+# Set the score to 0
+score = 0
+
+# Draw the score
+score_pen = turtle.Turtle()
+score_pen.speed(0)
+score_pen.color("white")
+score_pen.penup()
+score_pen.setposition(-295, 275)
+scorestring = "Score: %s" % score
+score_pen.write(scorestring, False, align = "left", font = ("Arial", 14, "normal"))
+score_pen.hideturtle()
+
 # Create the player turtle
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape(space_ship)
 player.penup()
 player.speed(0)
 player.setposition(0, -250)
@@ -46,8 +70,7 @@ for i in range(number_of_enemies):
     enemies.append(turtle.Turtle())
 
 for enemy in enemies:
-    enemy.color("red")
-    enemy.shape("circle")
+    enemy.shape(enemy_ship)
     enemy.penup()
     enemy.speed(0)
     x = random.randint(-200, 200)
@@ -56,8 +79,7 @@ for enemy in enemies:
 
 # Create the player's bullet
 bullet = turtle.Turtle()
-bullet.color("yellow")
-bullet.shape("triangle")
+bullet.shape(missile)
 bullet.penup()
 bullet.speed(0)
 bullet.setheading(90)
@@ -120,11 +142,12 @@ while True:
         enemy.setx(x)
         # Move the enemy back and down
         if enemy.xcor() < -280 or enemy.xcor() > 280:
-            y = enemy.ycor()
-            y -= 40
+            for e in enemies:
+                y = e.ycor()
+                y -= 20
+                e.sety(y)
             enemyspeed *= -1
-            enemy.sety(y)
-            # Check for a collision between the bullet and the enemy
+        # Check for a collision between the bullet and the enemy
         if is_collision(bullet, enemy):
             # Reset the bullet
             bullet.hideturtle()
@@ -134,6 +157,11 @@ while True:
             x = random.randint(-200, 200)
             y = random.randint(100, 250)
             enemy.setposition(x, y)
+            # Update the score
+            score += 10
+            scorestring = "Score %s" % score
+            score_pen.clear()
+            score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
         if is_collision(player, enemy):
             player.hideturtle()
             enemy.hideturtle()
