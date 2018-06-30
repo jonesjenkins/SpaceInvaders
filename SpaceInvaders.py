@@ -1,13 +1,29 @@
 import turtle
 import math
 import random
+import winsound
+import pygame
 import os
+
+pygame.init()
+pygame.mixer.init()
+
 
 # Set up the screen
 window = turtle.Screen()
 window.bgcolor("black")
 window.title("Space Invaders")
 window.bgpic("space_invaders_background.gif")
+
+# Play background music
+song = random.randint(0, 2)
+if song == 0:
+    sound = pygame.mixer.Sound("Star_Song.wav")
+elif song == 1:
+    sound = pygame.mixer.Sound("Telecom.wav")
+elif song == 2:
+    sound = pygame.mixer.Sound("User_Friendly_future_mix.wav")
+sound.play()
 
 
 # Add images
@@ -118,6 +134,7 @@ def fire_bullet():
         y = player.ycor()
         bullet.setposition(x, y + 10)
         bullet.showturtle()
+        winsound.PlaySound("Shoot.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 def is_collision(t1, t2):
     distance = math.sqrt(math.pow(t1.xcor() - t2.xcor(), 2) + math.pow(t1.ycor() - t2.ycor(), 2))
@@ -134,7 +151,6 @@ turtle.onkey(fire_bullet, "space")
 
 # Main game loop
 while True:
-
     for enemy in enemies:
         # Move the enemy
         x = enemy.xcor()
@@ -149,6 +165,7 @@ while True:
             enemyspeed *= -1
         # Check for a collision between the bullet and the enemy
         if is_collision(bullet, enemy):
+            winsound.PlaySound("Explosion.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
             # Reset the bullet
             bullet.hideturtle()
             bulletstate = "ready"
@@ -178,7 +195,6 @@ while True:
     if bullet.ycor() > 275:
         bullet.hideturtle()
         bulletstate = "ready"
-
 
 
 
