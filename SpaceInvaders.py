@@ -3,11 +3,9 @@ import math
 import random
 import winsound
 import pygame
-import os
 
 pygame.init()
 pygame.mixer.init()
-
 
 # Set up the screen
 window = turtle.Screen()
@@ -25,7 +23,6 @@ elif song == 2:
     sound = pygame.mixer.Sound("User_Friendly_future_mix.wav")
 sound.play()
 
-
 # Add images
 enemy_ship = "spin.gif"
 window.addshape(enemy_ship)
@@ -33,7 +30,6 @@ space_ship = "space_ship.gif"
 window.addshape(space_ship)
 missile = "missile.gif"
 window.addshape(missile)
-
 
 # Draw border
 border_pen = turtle.Turtle()
@@ -71,13 +67,10 @@ player.setposition(0, -250)
 player.setheading(90)
 
 playerspeed = 15
-
-
-
 enemyspeed = 2
 
 # Choose a number of enemies
-number_of_enemies = 5
+number_of_enemies = 2
 # Create an empty list of enemies
 enemies = []
 # Add enemies to the list
@@ -148,9 +141,9 @@ window.listen()
 turtle.onkey(move_left, "Left")
 turtle.onkey(move_right, "Right")
 turtle.onkey(fire_bullet, "space")
-
 # Main game loop
 while True:
+
     for enemy in enemies:
         # Move the enemy
         x = enemy.xcor()
@@ -196,11 +189,6 @@ while True:
         bullet.hideturtle()
         bulletstate = "ready"
 
-
-
-
 turtle.done()
-
-
 
 delay = input("Press enter to finish.")
