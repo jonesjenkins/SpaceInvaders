@@ -4,7 +4,7 @@
 
 Project Name: Space Invaders<br/>
 Development Language: Python<br/><br/>
-Developed By: Jones Jenkins<br/><br/><br/><br/>
+Developed By: Jones Jenkins<br/><br/>
 
 1. Introduction<br/>
    1. Purpose<br/>
